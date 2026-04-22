@@ -39,6 +39,6 @@ int WINAPI WinMain(_In_ HINSTANCE, _In_opt_ HINSTANCE, _In_ LPSTR, _In_ int) {
 	ID3D12RootSignature* rootSignature = nullptr;
 	hr = dxcommon->GetDevice()->CreateRootSignature(0, signatureBlob->GetBufferPointer(), signatureBlob->GetBufferSize(), IID_PPV_ARGS(&rootSignature));
 
-	assert(SUCCEEDED(hr));0
+	assert(SUCCEEDED(hr));
 	return 0;
 }
