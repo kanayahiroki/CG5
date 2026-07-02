@@ -118,8 +118,8 @@ int WINAPI WinMain(_In_ HINSTANCE, _In_opt_ HINSTANCE, _In_ LPSTR, _In_ int) {
 	D3D12_GRAPHICS_PIPELINE_STATE_DESC graphicsPipelineStateDesc{};
 	graphicsPipelineStateDesc.pRootSignature = rootSignature;                             // RootSignature
 	graphicsPipelineStateDesc.InputLayout = inputLayoutDesc;                              // InputLayput
-	graphicsPipelineStateDesc.VS = {vsBlob->GetBufferPointer(), vsBlob->GetBufferSize()}; // VertexShader
-	graphicsPipelineStateDesc.PS = {psBlob->GetBufferPointer(), psBlob->GetBufferSize()}; // PixelShader
+	graphicsPipelineStateDesc.VS = {vs.GetBlob()->GetBufferPointer(), vs.GetBlob()->GetBufferSize()}; // VertexShader
+	graphicsPipelineStateDesc.PS = {ps.GetBlob()->GetBufferPointer(), ps.GetBlob()->GetBufferSize()}; // PixelShader
 	graphicsPipelineStateDesc.BlendState = blendDesc;                                     // BlendState
 	graphicsPipelineStateDesc.RasterizerState = rasterizerDesc;                           // RasterizerState
 	// 書き込むRTVの情報
@@ -214,8 +214,8 @@ int WINAPI WinMain(_In_ HINSTANCE, _In_opt_ HINSTANCE, _In_ LPSTR, _In_ int) {
 	    errorBlob->Release();
 	}*/
 	rootSignature->Release();
-	vsBlob->Release();
-	psBlob->Release();
+	//vsBlob->Release();
+	//psBlob->Release();
 
 	// エンジンの終了処理
 	KamataEngine::Finalize();
