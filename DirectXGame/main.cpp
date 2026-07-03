@@ -4,11 +4,15 @@
 #include <cassert>
 //#include <d3dcompiler.h>
 #include "RootSignature.h"
+#include "PipelineState.h"
 
 using namespace KamataEngine;
 
 // 関数プロトタイプ宣言
 //ID3D10Blob* CompileShader(const std::wstring& filePath, const std::string& shaderModel);
+
+void SetPipeLineState(PipelineState& pipelineState, RootSignature& rs, Shader& vs, Shader& ps);
+}
 
 // Windowsアプリでのエントリーポイント(main関数)
 int WINAPI WinMain(_In_ HINSTANCE, _In_opt_ HINSTANCE, _In_ LPSTR, _In_ int) {

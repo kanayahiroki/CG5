@@ -170,6 +170,7 @@ copy "$(WindowsSdkDir)bin\$(TargetPlatformVersion)\x64\dxil.dll" "$(TargetDir)dx
   <ItemGroup>
     <ClCompile Include="main.cpp" />
     <ClCompile Include="MissUtility.cpp" />
+    <ClCompile Include="PipelineState.cpp" />
     <ClCompile Include="RootSignature.cpp" />
     <ClCompile Include="Shader.cpp" />
   </ItemGroup>
@@ -284,6 +285,7 @@ copy "$(WindowsSdkDir)bin\$(TargetPlatformVersion)\x64\dxil.dll" "$(TargetDir)dx
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="MissUtility.h" />
+    <ClInclude Include="PipelineState.h" />
     <ClInclude Include="RootSignature.h" />
     <ClInclude Include="Shader.h" />
   </ItemGroup>
