@@ -189,8 +189,8 @@ int WINAPI WinMain(_In_ HINSTANCE, _In_opt_ HINSTANCE, _In_ LPSTR, _In_ int) {
 	SetupPipelineState(pipelineState, rs, vs, ps);
 
 	// VertexBuffer(VertexResource, VertexBufferView)の生成
-	VertexBuffer vd;
-	vd.Create(sizeof(Vector4) * 3, sizeof(Vector4));
+	VertexBuffer vb;
+	vb.Create(sizeof(Vector4) * 3, sizeof(Vector4));
 
 
 	//// VertexResouceの生成 -------------------
@@ -231,7 +231,7 @@ int WINAPI WinMain(_In_ HINSTANCE, _In_opt_ HINSTANCE, _In_ LPSTR, _In_ int) {
 
 	// 頂点リソースにデータを書き込む --------------
 	Vector4* vertexData = nullptr;
-	vd.Get()->Map(0, nullptr, reinterpret_cast<void**>(&vertexData));
+	vb.Get()->Map(0, nullptr, reinterpret_cast<void**>(&vertexData));
 	vertexData[0] = {-0.5f, -0.5f, 0.0f, 1.0f}; // 左下
 	vertexData[1] = {0.0f, 0.5f, 0.0f, 1.0f};   // 上
 	vertexData[2] = {0.5f, -0.5f, 0.0f, 1.0f};  // 右下
@@ -251,7 +251,7 @@ int WINAPI WinMain(_In_ HINSTANCE, _In_opt_ HINSTANCE, _In_ LPSTR, _In_ int) {
 		// コマンドを積む
 		commandList->SetGraphicsRootSignature(rs.Get());     // RootSignatureの設定
 		commandList->SetPipelineState(pipelineState.Get());     // PSOの設定
-		commandList->IASetVertexBuffers(0, 1, vd.GetView()); // VBVの設定する
+		commandList->IASetVertexBuffers(0, 1, vb.GetView()); // VBVの設定する
 		// トボロジの設定
 		commandList->IASetPrimitiveTopology(D3D_PRIMITIVE_TOPOLOGY_TRIANGLELIST);
 		// 頂点数、インデックス数、インデックスお開始位置、インデックスのオフセット

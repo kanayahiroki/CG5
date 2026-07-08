@@ -8,15 +8,15 @@ public:
 	void Create(const UINT size, const UINT stride);
 
 	// ゲッター
-	ID3D12Resource* Get() {};
-	D3D12_VERTEX_BUFFER_VIEW* GetView() {};
+	ID3D12Resource* Get();
+	D3D12_VERTEX_BUFFER_VIEW* GetView();
 
 	// コンストラクタ
-	VertexBuffer() {};
+	VertexBuffer();
 	// デストラクタ
 	~VertexBuffer();
 
-	private:
-	ID3D12Resource* vertexBuffer_ = nullptr; // 頂点バッファ
-	    D3D12_VERTEX_BUFFER_VIEW vertexBufferView_{}; // 頂点バッファビュー
-}
+private:
+	ID3D12Resource* vertexBuffer_ = nullptr;      // 頂点バッファ
+	D3D12_VERTEX_BUFFER_VIEW vertexBufferView_{}; // 頂点バッファビュー
+};
