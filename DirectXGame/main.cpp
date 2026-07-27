@@ -7,6 +7,7 @@
 #include "PipelineState.h"
 #include "VertexBuffer.h"
 #include "IndexBuffer.h"
+#include "WorldTransformEx.h"
 
 using namespace KamataEngine;
 
@@ -471,12 +472,33 @@ int WINAPI WinMain(_In_ HINSTANCE, _In_opt_ HINSTANCE, _In_ LPSTR, _In_ int) {
 	//  頂点リソースのマップを解除する
 	// vd.Get()->Unmap(0, nullptr);
 
+	// 3Dモデルの読み込み
+	Model* model = Model::CreateFromOBJ("terrain");
+
+	// ワールド変換の初期化
+	WorldTransformEx worldTransform;
+	worldTransform.Initialize();
+	worldTransform.scale_ = Vector3(1.0f, 1.0f, 1.0f);
+
+	// カメラの初期化
+	Camera camera;
+	camera.Initialize();
+	camera.translation_ = Vector3(0.0f, 1.0f, 0.0f);
+
+
 	// メインループ
 	while (true) {
 		// エンジンの更新
 		if (KamataEngine::Update()) {
 			break;
 		}
+
+		// world変換行列の定数バッファへの転送
+		worldTransform.rotation_.y += 0.005f; // 適当な回転角度(ラジアン)
+		worldTransform.UpdateMatrix();
+
+		// cameraの更新と定数バッファへの転送
+		camera.UpdateMatrix();
 
 		// =========================================================
 		// 1. レンダーテクスチャへの描画処理（オフスクリーン）
@@ -503,6 +525,14 @@ int WINAPI WinMain(_In_ HINSTANCE, _In_opt_ HINSTANCE, _In_ LPSTR, _In_ int) {
 		// レンダーテクスチャを「赤色」でクリア（★ここが背景の赤になります）
 		commandList->ClearRenderTargetView(rtvHandleCPU, kRenderTargetClearColor, 0, nullptr);
 		commandList->ClearDepthStencilView(dsvHandleCPU, D3D12_CLEAR_FLAG_DEPTH, 1.0f, 0, 0, nullptr);
+
+
+		
+
+		// 描画
+		Model::PreDraw();
+		model->Draw(worldTransform, camera);
+		Model::PostDraw();
 
 		// ※パス1ではテクスチャを描画ターゲットにしているため、ここではポリゴン描画(Draw)を行わずに
 		//  赤色クリアのみ保持します（または別シェーダーで3Dモデルを描く場所です）
@@ -538,6 +568,20 @@ int WINAPI WinMain(_In_ HINSTANCE, _In_opt_ HINSTANCE, _In_ LPSTR, _In_ int) {
 		// 描画終了・画面表示
 		dxCommon->PostDraw();
 	}
+	// 解放
+	delete model;
+
+	renderTextureResource->Release();
+	srvDescriptorHeap->Release();
+	rtvDescriptorHeap->Release();
+
+	depthStencilResource->Release();
+	dsvDescriptorHeap->Release();
+
+	// エンジンの終了処理
+	KamataEngine::Finalize();
+
+	return 0;
 }
 //// シェーダーコンパイル関数
 ////  filePath    : シェーダーファイルのパス    例) L"Resources/shaders/TestVS.hlsl"
